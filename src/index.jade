@@ -1,0 +1,21 @@
+doctype
+html
+  head
+    title Autonomous Fligh with the AR Drone 2.0
+    script(type='text/javascript', src='/vendor/reveal.js/lib/js/head.min.js')
+    link(rel='stylesheet', type='text/css', href='/vendor/reveal.js/css/reveal.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/reveal.js/css/theme/sky.css')
+    link(rel='stylesheet', type='text/css', href='/vendor/pygments/css/monokai.css')
+    link(rel='stylesheet', type='text/css', href='/css/style.css?' + +new Date)
+  body
+    .reveal: include slides.html
+    #hud: include hud
+    #emergency-modal.modal.fade: .modal-dialog: .modal-content
+    script(type='text/javascript', src='/vendor/lodash/dist/lodash.js')
+    script(type='text/javascript', src='/vendor/reveal.js/js/reveal.js')
+    script(type='text/javascript', src='/vendor/jquery/dist/jquery.js')
+    script(type='text/javascript', src='/vendor/bootstrap/dist/js/bootstrap.js')
+    script(type='text/javascript', src='/vendor/socket.io-client/dist/socket.io.min.js')
+    script(type='text/javascript', src='/vendor/dronestream/dist/nodecopter-client.js')
+    script(type='text/javascript', src='/vendor/mousetrap/mousetrap.js')
+    script(type='text/javascript', src='/js/main.js?' + +new Date)

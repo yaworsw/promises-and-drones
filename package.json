@@ -1,0 +1,26 @@
+{
+  "name": "ar-drone-talk",
+  "scripts": {
+    "postinstall":  "./node_modules/.bin/bower install",
+    "postupdate":   "./node_modules/.bin/bower update",
+    "start":        "node index.js"
+  },
+  "dependencies": {
+    "ar-drone":           "",
+    "ardrone-autonomy":   "",
+    "bower":              "",
+    "colors":             "",
+    "dateformat":         "",
+    "dronestream":        "",
+    "express":            "3.x",
+    "gulp":               "",
+    "gulp-browserify":    "",
+    "gulp-jade":          "",
+    "gulp-less":          "1.2.3",
+    "lodash":             "",
+    "nodemon":            "",
+    "q":                  "",
+    "sliced":             "",
+    "socket.io":          ""
+  }
+}

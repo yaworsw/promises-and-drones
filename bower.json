@@ -1,0 +1,12 @@
+{
+  "name": "ar-drone-talk",
+  "dependencies": {
+    "bootstrap":          "",
+    "jquery":             "",
+    "lodash":             "",
+    "mousetrap":          "",
+    "pygments":           "",
+    "reveal.js":          "",
+    "socket.io-client":   ""
+  }
+}

@@ -1,0 +1,58 @@
+@import '../../bower_components/bootstrap/less/bootstrap';
+
+body {
+  // background: url('/assets/bg.png');
+}
+
+.reveal section img {
+  border: none;
+  box-shadow: none;
+  background: none;
+}
+
+.reveal section pre {
+  background: #333;
+  color: #afafaf;
+  padding: 20px;
+}
+
+.panorama-image {
+  float: left;
+  width: 25%;
+}
+
+#emergency-modal {
+  .btn {
+    width: 28%;
+    margin: 15px 2.5333%;
+    .btn-info;
+    &.stop, &.stop-and-land {
+      .btn-danger;
+    }
+    &.recover, &.takeoff {
+      .btn-success;
+    }
+    &.forward, &.backward, &.left, &.right, &.clockwise, &.counterclockwise, &.up, &.down {
+      .btn-primary;
+    }
+    &.backflip, &.flipleft, &.flipahead, &.wave, &.turnaround {
+      .btn-warning;
+    }
+    &.light-party, &.blink-orange, &.fire, &.left-green-right-red, &.left-red-right-green, &.red-snake {
+      .btn-default;
+    }
+  }
+}
+
+#hud {
+  font-family: monospace;;
+  position: fixed;
+  top: 0;
+  right: 0 ;
+  background: black;
+  color: white;
+  padding: 10px;
+  .measure {
+    color: cyan;
+  }
+}

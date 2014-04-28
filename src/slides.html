@@ -1,0 +1,779 @@
+<div class="slides">
+    <section data-id="4f6d20c4d25cc3aa8e35a512a859723a">
+        <br>
+        <h2>Flying Drones with JavaScript<br>
+</h2>
+<h3>and Promises</h3>
+<div>
+        <br>
+</div>
+<div>
+    <font style="font-size: 42px;">
+        <br>
+    </font>
+</div>
+<div>
+    <font style="font-size: 42px;">Will Yaworsky</font>
+</div>
+<div>
+<font style="font-size: 42px;">@yaworsw</font>
+</div>
+
+</section>
+<!--     <section data-id="e771b3f121d813a70afacb172a08d8be">
+        <h2>
+            <br>
+        </h2>
+<div>
+</div>
+<div class="fragment" style="font-size: 52px;" data-fragment-index="0">this presentation flies the drone</div>
+
+</section> -->
+        <section data-id="b7e5af2062e55ad83cd00d2ec7ac56d9">
+            <h2>
+        <br>
+</h2>
+</section>
+
+                <section data-id="981c42b4037bbe8f59b75e372bce4541">
+                    <h2>Nodecopter</h2>
+<div>https://github.com/felixge/node-ar-drone</div>
+    <div>npm module:&nbsp;ar-drone</div>
+<div>
+    <br>
+</div>
+<h2>
+<img src="/assets/nodecopter.png" style="width: 340px; height: 340px; max-height: none; max-width: none;">
+                    <br>
+</h2>
+</section>
+                    <section data-id="b4e97e429e23a7f4af8ff4147ce98283">
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="kd">var</span> <span class="nx">arDrone</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'ar-drone'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">client</span>  <span class="o">=</span> <span class="nx">arDrone</span><span class="p">.</span><span class="nx">createClient</span><span class="p">();</span>
+
+<span class="fragment" data-fragment-index="0" data-state="takeoff"><span class="nx">client</span><span class="p">.</span><span class="nx">takeoff</span><span class="p">();</span></span>
+
+<span class="fragment" data-fragment-index="2" data-state="up"><span class="nx">client</span><span class="p">.</span><span class="nx">up</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span></span>
+  <span class="fragment" data-fragment-index="3" data-state="clockwise"><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="mi">3000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">clockwise</span><span class="p">();</span>
+  <span class="p">})</span></span>
+  <span class="fragment" data-fragment-index="4" data-state="stop-and-land"><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">land</span><span class="p">();</span>
+  <span class="p">});</span></span>
+</pre></div>
+
+    </div>
+
+
+                </section>
+                <section data-id="38aad9f58faa8001f61bc959fab9a77b" data-state="takeoff">
+                    <h2>Animations</h2>
+
+
+<ul style="float:left;width:45%;padding-left:3%">
+<li>phiM30Deg</li>
+    <li>phi30Deg</li>
+    <li>thetaM30Deg</li>
+    <li>theta30Deg</li>
+    <li>theta20degYaw200deg</li>
+    <li>theta20degYawM200deg</li>
+    <li class="fragment highlight-blue" data-fragment-index="0" data-state="turnaround">turnaround</li>
+    <li>turnaroundGodown</li>
+    <li>yawShake</li>
+    <li>yawDance</li>
+</ul>
+<ul style="float:left;width:45%;padding-left:3%">
+<li>phiDance</li>
+    <li>thetaDance</li>
+    <li>vzDance</li>
+    <li class="fragment highlight-blue" data-fragment-index="1" data-state="wave">wave</li>
+    <li>phiThetaMixed</li>
+    <li>doublePhiThetaMixed</li>
+    <li class="fragment highlight-blue" data-fragment-index="2" data-state="flipahead">flipAhead</li>
+    <li>flipBehind</li>
+    <li>flipLeft</li>
+    <li>flipRight</li>
+</ul>
+                </section>
+                <section data-id="00288f06d05b4a11d297e75366302e87">
+                    <h2>Light Animations</h2>
+<ul style="float:left;width:40%;padding-left:3%">
+<li>blinkGreenRed</li>
+<li>blinkGreen</li>
+<li>blinkRed</li>
+<li>blinkOrange</li>
+<li>snakeGreenRed</li>
+<li class="fragment highlight-blue" data-fragment-index="0" data-state="fire">fire</li>
+<li>standard</li>
+<li>red</li>
+<li>green</li>
+<li class="fragment highlight-blue" data-fragment-index="1" data-state="red-snake">redSnake</li>
+
+</ul>
+<ul style="float:left;width:50%;padding-left:3%">
+<li>blank</li>
+<li>rightMissile</li>
+<li>leftMissile</li>
+<li>doubleMissile</li>
+<li>frontLeftGreenOthersRed</li>
+<li>frontRightGreenOthersRed</li>
+<li>rearRightGreenOthersRed</li>
+<li>rearLeftGreenOthersRed</li>
+<li class="fragment highlight-blue" data-fragment-index="2" data-state="left-green-right-red">leftGreenRightRed</li>
+<li>leftRedRightGreen</li>
+<li>blinkStandard</li>
+
+</ul>
+                </section>
+
+<section data-state="stop-and-land">
+  <h2>Registering commands in the browser</h2>
+</section>
+
+                <section data-id="80463cec3653cd6211ce3ad233cf1544">
+
+    <!-- 1 --><section data-transition="none" data-background-transition="none">
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span>
+
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+
+            <section data-transition="none" data-background-transition="none">
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span><span style="visibility:hidden">
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span>
+
+<span class="p">});</span></span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+            </section>
+
+
+
+
+            <section data-transition="none" data-background-transition="none">
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span><span style="visibility:hidden">
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span style="visibility:hidden"><span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span></span>
+
+<span class="p">});</span></span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+            </section>
+
+
+            <section data-transition="none" data-background-transition="none">
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span><span style="visibility:hidden">
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span style="visibility:hidden"><span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span></span>
+
+<span class="p">});</span></span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+                        </section>
+
+            <section data-transition="none" data-background-transition="none">
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+  <span style="visibility:hidden">
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span></span>
+
+  <span style="visibility:hidden"><span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span></span>
+
+<span class="p">});</span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+                        </section>
+
+    <!-- 1 --><section data-transition="none" data-background-transition="none">
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span style="visibility:hidden"><span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span></span>
+
+<span class="p">});</span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+    <!-- 1 --><section data-transition="none" data-background-transition="none">
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span>
+
+<span class="p">});</span>
+
+<span style="visibility:hidden"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span></span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+    <!-- 1 --><section data-transition="none" data-background-transition="none">
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// commands/commands.js</span>
+
+<span class="kd">var</span> <span class="nx">socket</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../socket/socket'</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">def</span>    <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="kd">var</span> <span class="nx">makeCommand</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Sending command: '</span><span class="p">,</span> <span class="nx">command</span><span class="p">);</span>
+    <span class="nx">socket</span><span class="p">.</span><span class="nx">emit</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">};</span>
+<span class="p">};</span>
+
+<span class="c1">// the server sends an array of commands it knows about</span>
+<span class="nx">socket</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">'commands'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">commands</span> <span class="o">=</span> <span class="p">{};</span>
+
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Available commands'</span><span class="p">,</span> <span class="nx">commandsArray</span><span class="p">);</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commandsArray</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]</span> <span class="o">=</span> <span class="nx">makeCommand</span><span class="p">(</span><span class="nx">command</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="c1">// resolve with the commands object</span>
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">commands</span><span class="p">);</span>
+
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+
+<section>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// reveal/reveal.js</span>
+
+<span class="kd">var</span> <span class="nx">def</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="s1">'../commands/commands'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">commands</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">commands</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">fn</span><span class="p">,</span> <span class="nx">command</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Reveal</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">fn</span><span class="p">);</span>
+  <span class="p">});</span>
+
+  <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">Reveal</span><span class="p">);</span>
+
+<span class="p">});</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+</pre></div>
+
+</div>
+
+</section>
+
+<section>
+    <h1>Then</h1>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">onFulfilled</span><span class="p">,</span> <span class="nx">onRejected</span><span class="p">,</span> <span class="nx">onProgress</span><span class="p">);</span>
+</pre></div>
+
+</div>
+
+</section>
+
+
+
+<section>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="c1">// controls/keyboard.js</span>
+
+<span class="kd">var</span> <span class="nx">map</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">'w'</span><span class="o">:</span> <span class="s1">'forward'</span><span class="p">,</span>
+  <span class="s1">'a'</span><span class="o">:</span> <span class="s1">'counterclockwise'</span><span class="p">,</span>
+  <span class="s1">'s'</span><span class="o">:</span> <span class="s1">'backward'</span><span class="p">,</span>
+  <span class="s1">'d'</span><span class="o">:</span> <span class="s1">'clockwise'</span><span class="p">,</span>
+  <span class="s1">'q'</span><span class="o">:</span> <span class="s1">'stop'</span><span class="p">,</span>
+  <span class="s1">'r'</span><span class="o">:</span> <span class="s1">'recover'</span>
+<span class="p">};</span>
+
+<span class="nx">require</span><span class="p">(</span><span class="s1">'../commands/commands'</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">commands</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="nx">_</span><span class="p">.</span><span class="nx">each</span><span class="p">(</span><span class="nx">map</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">command</span><span class="p">,</span> <span class="nx">key</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">Mousetrap</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">key</span><span class="p">,</span> <span class="nx">commands</span><span class="p">[</span><span class="nx">command</span><span class="p">]);</span>
+  <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+                </section>
+
+
+
+                <section data-id="0c4a30797fa3f4e9dbfebaed7607513d">
+                </section>
+                <section data-id="aacf94cb2ea3c9901799275360d39acf" data-state="panorama-update">
+                <div class="stretch">
+
+                    <img src="/panorama/1.png?" alt="" class="panorama-image">
+                    <img src="/panorama/2.png?" alt="" class="panorama-image">
+                    <img src="/panorama/3.png?" alt="" class="panorama-image">
+                    <img src="/panorama/4.png?" alt="" class="panorama-image">
+                    <img src="/panorama/5.png?" alt="" class="panorama-image">
+                    <img src="/panorama/6.png?" alt="" class="panorama-image">
+                    <img src="/panorama/7.png?" alt="" class="panorama-image">
+                    <img src="/panorama/8.png?" alt="" class="panorama-image">
+
+                </div>
+
+                </section>
+
+
+<section>
+
+
+<section>
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="kd">var</span> <span class="nx">rotate</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">def</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+
+  <span class="nx">client</span><span class="p">.</span><span class="nx">clockwise</span><span class="p">(</span><span class="mf">0.2</span><span class="p">);</span>
+
+  <span class="c1">// stop rotating after 1/2 seconds</span>
+  <span class="nx">client</span><span class="p">.</span><span class="nx">after</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">client</span><span class="p">.</span><span class="nx">stop</span><span class="p">();</span>
+
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="c1">// wait 3 more seconds before resolving</span>
+      <span class="c1">// to stabilize</span>
+      <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">client</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">3000</span><span class="p">);</span>
+
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+<section>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="kd">var</span> <span class="nx">takePic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">def</span> <span class="o">=</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">defer</span><span class="p">();</span>
+
+  <span class="nx">drone</span><span class="p">.</span><span class="nx">getPngStream</span><span class="p">().</span><span class="nx">once</span><span class="p">(</span><span class="s1">'data'</span><span class="p">,</span> <span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">fs</span><span class="p">.</span><span class="nx">writeFile</span><span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">'images'</span><span class="p">,</span> <span class="mi">1</span> <span class="o">+</span> <span class="s1">'.png'</span><span class="p">),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span> <span class="nx">def</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span> <span class="p">}</span>
+      <span class="k">else</span>     <span class="p">{</span> <span class="nx">def</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">drone</span><span class="p">);</span> <span class="p">}</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+
+  <span class="k">return</span> <span class="nx">def</span><span class="p">.</span><span class="nx">promise</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+
+</div>
+
+
+</section>
+
+
+<section>
+
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="fragment fade-in" data-fragment-index="1">
+<span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="2">
+  <span class="nx">takePic</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="3"><span class="fragment fade-in" data-fragment-index="9001"><span class="c1"> // 1</span></span>
+    <span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="4">
+      <span class="nx">takePic</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="5"><span class="fragment fade-in" data-fragment-index="9001"><span class="c1"> // 2</span></span>
+        <span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="6">
+          <span class="nx">takePic</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="7"><span class="fragment fade-in" data-fragment-index="9001"><span class="c1"> // 3</span></span>
+            <span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="8">
+              <span class="nx">takePic</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="9"><span class="fragment fade-in" data-fragment-index="9001"><span class="c1"> // 4</span></span>
+                <span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="11">
+                  <span class="nx">takePic</span><span class="p">(</span><span class="nx">drone</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span> <span class="p">{</span><span class="fragment fade-in" data-fragment-index="901"><span class="fragment fade-in" data-fragment-index="9001"><span class="c1"> // 5</span></span>
+                    <span class="p">...</span></span>
+                  <span class="p">});</span></span>
+                <span class="p">});</span></span>
+              <span class="p">});</span></span>
+            <span class="p">});</span></span>
+          <span class="p">});</span></span>
+        <span class="p">});</span></span>
+      <span class="p">});</span></span>
+    <span class="p">});</span></span>
+  <span class="p">});</span></span>
+<span class="p">});</span></span>
+</pre></div>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="nx">rotate</span><span class="p">(</span><span class="nx">drone</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">);</span>
+</pre></div>
+
+</div>
+
+</section>
+
+<section>
+<div class="hlcode">
+<div class="syntax"><pre><span class="kd">var</span> <span class="nx">rotateAndTakePic</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">promise</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">Q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">promise</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">rotate</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">takePic</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">promise</span> <span class="o">=</span> <span class="nx">drone</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="mi">8</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">promise</span> <span class="o">=</span> <span class="nx">rotateAndTakePic</span><span class="p">(</span><span class="nx">promise</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="nx">promise</span><span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s1">'Panorama finished!'</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+
+</div>
+</section>
+
+</section>
+
+
+<section>
+<section>
+  <h1>When</h1>
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">thing</span><span class="p">);</span>  <span class="c1">// =&gt; a promise that resolves with the value of thing</span>
+<span class="nx">Q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">thing</span><span class="p">);</span>  <span class="c1">// ...</span>
+<span class="nx">$q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">thing</span><span class="p">);</span> <span class="c1">// ...</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">promise</span><span class="p">);</span>  <span class="c1">// =&gt; returns the promise it was given</span>
+<span class="nx">Q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">promise</span><span class="p">);</span>  <span class="c1">// ...</span>
+<span class="nx">$q</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">promise</span><span class="p">);</span> <span class="c1">// ...</span>
+</pre></div>
+
+  </div>
+
+  </section>
+
+
+<section>
+
+
+<div class="hlcode">
+<div class="syntax"><pre><span class="kd">var</span> <span class="nx">maybeAPromise</span> <span class="o">=</span> <span class="nx">possiblyAsyncFunction</span><span class="p">();</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">maybeAPromise</span><span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// do stuff</span>
+
+<span class="p">});</span>
+</pre></div>
+
+</div>
+
+</section>
+
+</section>
+
+<section>
+
+  <h2>Quick Recap</h2>
+
+  <ul>
+    <li>Use then to
+    <ul>
+      <li>Interact with the result of a deferred action</li>
+      <li>Error handling</li>
+      <li>Trigger progress events<br></li>
+    </ul></li>
+
+
+
+    <li>Use when to</li>
+      <ul>
+        <li>Ensure you're working with a promise</li>
+      </ul>
+
+  </ul>
+
+</section>
+
+<section>
+
+  <p>This was just the very tip of the iceburg.  Promise libraries typically have <strong>much much</strong> more to offer than just then and when.</p>
+
+</section>
+
+    <section data-id="4f6d20c4d25cc3aa8e35a512a859723a">
+
+  <h2>Will Yaworsky</h2>
+  <br>
+  <h3>@yaworsw</h3>
+  <h3>github: yaworsw</h3>
+<br>
+  <h4>repo: yaworsw/promises-and-drones</h4>
+
+</section>
+
+
+            </div>
